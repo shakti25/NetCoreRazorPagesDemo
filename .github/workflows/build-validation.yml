@@ -2,7 +2,11 @@ name: build/test
 
 on:
   workflow_dispatch:
-
+    inputs:
+      reason:
+        description: "reason to trigger"
+        required: true
+        default: "testing"
   push:
     branches: ["main"]
     paths:
