@@ -8,7 +8,8 @@ on:
         required: true
         default: "testing"
   push:
-    branches: ["main"]
+    branches:
+      - main
     paths:
       - "**.cs"
       - "**.csproj"
@@ -24,9 +25,14 @@ env:
   DOTNET_VERSION: "6.0.x"
 
 jobs:
-  build:
-    name: build
-    runs-on: windows-latest
+  build-and-test:
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+
+    name: build and test-${{matrix.os}}
+    runs-on: ${{matrix.os}}
     timeout-minutes: 15
 
     steps:
@@ -42,16 +48,6 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
-
-  test:
-    name: test
-    runs-on: windows-latest
-    timeout-minutes: 15
-    needs:
-      - build
-
-    steps:
-      - uses: actions/checkout@v3
 
       - name: Run Tests
         run: dotnet test --no-restore --no-build --verbosity normal
