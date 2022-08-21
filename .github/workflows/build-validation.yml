@@ -1,25 +1,52 @@
-name: .NET
+name: build/test
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths:
+      - "**.cs"
+      - "**.csproj"
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+env:
+  DOTNET_VERSION: "6.0.x"
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    name: build
+    runs-on: windows-latest
+    timeout-minutes: 15
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+  test:
+    name: test
+    runs-on: windows-latest
+    timeout-minutes: 15
+    needs:
+      - build
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Tests
+        run: dotnet test --no-restore --no-build --verbosity normal
