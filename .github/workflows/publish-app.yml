@@ -31,7 +31,7 @@ jobs:
 
       - name: Test
         run: |
-          dotnet test --no-build --verbosity normal
+          dotnet test --no-restore --verbosity normal
 
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v2
