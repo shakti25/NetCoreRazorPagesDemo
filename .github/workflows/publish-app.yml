@@ -1,0 +1,41 @@
+name: publish web app
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: NetCoreRazorPageDemo-RT-001
+  AZURE_WEBAPP_PACKAGE_PATH: "."
+  DOTNET_VERSION: "6.0.x"
+
+jobs:
+  publish:
+    name: Azure Deploy
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: |
+          dotnet build -c Release --no-restore
+          dotnet publish -c Release -o deployment
+
+      - name: Test
+        run: |
+          dotnet test --no-build --verbosity normal
+
+      - name: Deploy to App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/deployment"
