@@ -4,31 +4,38 @@
     ViewData["Title"] = "Customer";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1>Customer List</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(Model.Customers != null)
-        {
-            foreach (var customer in Model.Customers)
+<a asp-page="Create">Create New</a>
+
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model.Customers != null)
             {
-                <tr>
-                    <td>@customer.Id</td>
-                    <td>@customer.Name</td>
-                    <td>
-                        <!-- <snippet_Edit> -->
-                        <a asp-page="./Edit" asp-route-id="@customer.Id">Edit</a>
-                        <!-- </snippet_Edit> -->
-                    </td>
-                </tr>
+                foreach (var customer in Model.Customers)
+                {
+                    <tr>
+                        <td>@customer.Id</td>
+                        <td>@customer.Name</td>
+                        <td>
+                            <!-- <snippet_Edit> -->
+                            <a asp-page="./Edit" asp-route-id="@customer.Id">Edit</a> |
+                            <!-- </snippet_Edit> -->
+                            <!-- <snippet_Delete> -->
+                            <button type="submit" asp-page-handler="delete" asp-route-id="@customer.Id">delete</button>
+                            <!-- </snippet_Delete> -->
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</form>

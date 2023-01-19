@@ -1,10 +1,9 @@
-﻿@page "{id:int?}"
-@model RToora.DemoRazorPages.Web.Pages.Customer.EditModel
+﻿@page
+@model RToora.DemoRazorPages.Web.Pages.Customer.CreateModel
 @{
-    ViewData["Title"] = "Edit";
 }
 
-<h2>Edit Customer</h2>
+<h2>New Customer</h2>
 
 <hr />
 
@@ -12,7 +11,6 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Customer!.Id" />
             <div class="mb-3">
                 <label asp-for="Customer!.Name" class="form-label"></label>
                 <input asp-for="Customer!.Name" class="form-control" />
@@ -31,6 +29,6 @@
 
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial"); 
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }

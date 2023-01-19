@@ -5,18 +5,26 @@ namespace RToora.DemoRazorPages.Web.Pages.Customer;
 
 public class EditModel : PageModel
 {
+    private readonly DemoDbContext _context;
+
+    public EditModel(DemoDbContext context)
+    {
+        _context = context;
+    }
+
     [BindProperty]
     public Models.Customer? Customer { get; set; }
+
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-        if(id == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        Customer = new Models.Customer() { Id = id.Value, Name = $"Customer {id}" };
+        Customer = await _context.Customer.FirstOrDefaultAsync(c => c.Id == id);
 
-        if( Customer == null)
+        if (Customer == null)
         {
             return NotFound();
         }
@@ -26,16 +34,35 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if(!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        if(Customer != null) 
+        if (Customer != null)
         {
-            
+            _context.Attach(Customer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                if (!CustomerExists(Customer.Id))
+                {
+                    return NotFound();
+                }else
+                {
+                    // TODO: replace with logging
+                    throw new Exception(ex.Message, ex);
+                }
+            }
         }
 
         return RedirectToPage("./Index");
     }
+
+    private bool CustomerExists(int id) => _context.Customer.Any(c => c.Id == id);
+
 }
