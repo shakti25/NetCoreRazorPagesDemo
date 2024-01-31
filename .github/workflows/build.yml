@@ -30,7 +30,7 @@ jobs:
         run: dotnet restore
 
       - name: Build Solution
-        run: dotnet build -c --no-restore
+        run: dotnet build -c Release --no-restore
     
   test:
     needs: build
