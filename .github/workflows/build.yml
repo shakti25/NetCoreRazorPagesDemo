@@ -9,7 +9,7 @@ env:
   DOTNET_VERSION: '8.0.x'
 
 jobs:
-  build:
+  build-test:
     
     runs-on: ubuntu-latest
     steps:
@@ -32,12 +32,16 @@ jobs:
 
       - name: Build Solution
         run: dotnet build -c Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test --no-restore -v normal
     
-  test:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-       - name: Checking files
-         run: ls
-       # - name: Run Tests
-       #   run: dotnet test /NetCoreRazorPagesDemo.sln --no-restore -v normal
+       - name: Downloading Artifacts
+         run: echo "downloading artifacts here"
+
+       - name: Publishing
+         run: echo "publishing the artifacts"
