@@ -5,6 +5,10 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RToora.DemoRazorPages.Web", "src\Web\RToora.DemoRazorPages.Web.csproj", "{C46B8954-AD4D-487C-BD21-E41098CD2E80}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{833CC90E-9802-4906-907C-2C5BE33F7C60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RToora.DemoRazorPages.Web.Tests", "tests\RToora.DemoRazorPages.Web.Tests\RToora.DemoRazorPages.Web.Tests.csproj", "{C04AE566-28BF-45F0-AE45-5042ECEB2794}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,18 @@ Global
 		{C46B8954-AD4D-487C-BD21-E41098CD2E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C46B8954-AD4D-487C-BD21-E41098CD2E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C46B8954-AD4D-487C-BD21-E41098CD2E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C04AE566-28BF-45F0-AE45-5042ECEB2794}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04AE566-28BF-45F0-AE45-5042ECEB2794}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04AE566-28BF-45F0-AE45-5042ECEB2794}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04AE566-28BF-45F0-AE45-5042ECEB2794}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7140B35A-2AB8-44C7-9CC7-D99A117F3C5E}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C04AE566-28BF-45F0-AE45-5042ECEB2794} = {833CC90E-9802-4906-907C-2C5BE33F7C60}
 	EndGlobalSection
 EndGlobal
