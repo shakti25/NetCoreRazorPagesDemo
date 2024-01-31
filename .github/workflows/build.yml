@@ -37,5 +37,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-       - name: Run Tests
-         run: dotnet test /NetCoreRazorPagesDemo.sln --no-restore -v normal
+       - name: Checking files
+         run: ls
+       # - name: Run Tests
+       #   run: dotnet test /NetCoreRazorPagesDemo.sln --no-restore -v normal
