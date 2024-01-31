@@ -37,7 +37,7 @@ jobs:
         run: dotnet test --no-restore -v normal
     
   deploy:
-    needs: build
+    needs: build-test
     runs-on: ubuntu-latest
     steps:
        - name: Downloading Artifacts
