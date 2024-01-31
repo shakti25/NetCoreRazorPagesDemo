@@ -10,6 +10,7 @@ env:
 
 jobs:
   build:
+    
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -18,13 +19,8 @@ jobs:
       - name: Show Project files
         run: ls
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-            node-version: '20.x'
-
       - name: Setup DotNet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -42,4 +38,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
        - name: Run Tests
-         run: dotnet test NetCoreRazorPagesDemo.sln --no-restore -v normal
+         run: dotnet test /NetCoreRazorPagesDemo.sln --no-restore -v normal
