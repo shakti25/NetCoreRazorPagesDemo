@@ -18,6 +18,11 @@ jobs:
       - name: Show Project files
         run: ls
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: '20.x'
+
       - name: Setup DotNet
         uses: actions/setup-dotnet@v3
         with:
