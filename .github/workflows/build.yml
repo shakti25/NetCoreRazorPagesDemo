@@ -36,7 +36,7 @@ jobs:
         run: dotnet test --no-restore -v normal
 
       - name: Create Deployment Folder
-        run: dotnet publish /src/Web/RToora.DemoRazorPages.Web.csproj -c Release -o deployment
+        run: dotnet publish src/Web/RToora.DemoRazorPages.Web.csproj -c Release -o deployment
 
       - name: Check if folder is present
         run: ls
