@@ -10,7 +10,6 @@ env:
 
 jobs:
   build-test:
-    
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -35,13 +34,29 @@ jobs:
 
       - name: Run Tests
         run: dotnet test --no-restore -v normal
-    
+
+      - name: Create Deployment Folder
+        run: dotnet publish -c Release -o deployment
+
+      - name: Check if folder is present
+        run: ls
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-package
+          path: deployment
+
   deploy:
     needs: build-test
     runs-on: ubuntu-latest
     steps:
-       - name: Downloading Artifacts
-         run: echo "downloading artifacts here"
+      - name: Downloading Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: deployment-package
 
-       - name: Publishing
-         run: echo "publishing the artifacts"
+      - name: Publishing
+        run: |
+          ls
+          echo "publishing the artifacts"
