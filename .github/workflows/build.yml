@@ -10,6 +10,10 @@ env:
 
 jobs:
   build-test:
+    env:
+      PACKAGE_NAME: 'deployment-package'
+    outputs:
+      output1: ${{ steps.define_output.outputs.my_output_1 }}
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -41,11 +45,22 @@ jobs:
       - name: Check if folder is present
         run: ls
 
+      - name: Define Job output
+        id: define_output
+        run: echo "my_output_1=${{env.PACKAGE_NAME}}" >> "$GITHUB_OUTPUT"
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: deployment-package
+          name: ${{ env.PACKAGE_NAME }}
           path: deployment
+
+  Artifact:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display previous Job output
+        run: echo "${{ needs.build-test.outputs.output1 }}"
 
   deploy:
     needs: build-test
